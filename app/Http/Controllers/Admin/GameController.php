@@ -70,7 +70,7 @@ class GameController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request,Game $games)
+    public function update(Request $request,Game $game)
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
@@ -89,18 +89,18 @@ class GameController extends Controller
         // Check if a new photo is provided
         if ($request->hasFile('photo')) {
             // Delete the existing photo if it exists
-            if ($games->photo) {
-                Storage::delete('uploads/games_photo/' . $games->photo);
+            if ($game->photo) {
+                Storage::delete('uploads/games_photo/' . $game->photo);
             }
             // Store the new photo
             $avatar = $request->file('photo');
             $avatar->store('uploads/games_photo/', 'public');
             $photo = $avatar->hashName();
         } else {
-            $photo = $games->photo; // Retain the existing photo
+            $photo = $game->photo; // Retain the existing photo
         }
 
-        $games->update([
+        $game->update([
             'name' => $request->name,
             'description' => $request->description,
             'price' => $request->price,
@@ -109,29 +109,29 @@ class GameController extends Controller
 
         ]);
 
-        return response()->json(['isSuccess' => true, 'data' =>    $games], 200);
+        return response()->json(['isSuccess' => true, 'data' =>    $game], 200);
     }
 
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Game $games)
+    public function destroy(Game $game)
     {
 
-        if (!$games) {
+        if (!$game) {
         return response()->json(['message' => 'games not found'], 404);
         }
-        if ($games->photo) {
+        if ($game->photo) {
             // Assuming 'personal_photo' is the attribute storing the file name
-            $photoPath = 'uploads/games_photo/' . $games->photo;
+            $photoPath = 'uploads/games_photo/' . $game->photo;
 
             // Delete photo from storage
             Storage::delete($photoPath);
         }
 
         // Delete the user
-        $games->delete();
+        $game->delete();
 
         return response()->json(['message' => 'العملية تمت بنجاح']);
 

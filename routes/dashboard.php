@@ -8,15 +8,17 @@ use App\Http\Controllers\Admin\ContacUsController;
 use App\Http\Controllers\Admin\CouponsController;
 
 
-use App\Http\Controllers\Admin\ReviewController;
+use App\Http\Controllers\Admin\GameController;
 
+use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\ServiceController;
-use App\Http\Controllers\Admin\SettingController;
 
+use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\TermsController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -80,6 +82,14 @@ Route::post('/services', [ServiceController::class, 'store']);
 Route::post('/services/{service}', [ServiceController::class, 'update']);
 Route::delete('/services/{service}', [ServiceController::class, 'destroy']);
 Route::get('getServicesCount', [ServiceController::class, 'getServiceCount']);
+
+//games
+Route::get('/games', [GameController::class, 'index']);
+Route::get('/games/{game}', [GameController::class, 'show']);
+Route::post('/games', [GameController::class, 'store']);
+Route::post('/games/{game}', [GameController::class, 'update']);
+Route::delete('/games/{game}', [GameController::class, 'destroy']);
+Route::get('getGameCount', [GameController::class, 'getGameCount']);
 
 //reviews
 Route::get('/reviews', [ReviewController::class, 'index']);
