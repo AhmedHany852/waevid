@@ -61,7 +61,7 @@ class SocialMediaController extends Controller
         // Calculate total_price
         // $PriceForOne = $request->price / $request->visites;
         // $totalPrice =  $PriceForOne  * $request->visites;
-        $pricePerVisit = $request->price / $visites;
+        $pricePerVisit = $request->price / 100;
         $totalPrice = $pricePerVisit * $visites;
 
         // Create a new social media item with total_price
@@ -137,7 +137,7 @@ class SocialMediaController extends Controller
         //     return response()->json(['error' => 'The number of visits must be greater than or equal to the minimum visits.'], 422);
         // }
         // Calculate total_price
-        $PriceForOne = $request->price / $visites;
+        $PriceForOne = $request->price / 100;
         $totalPrice =  $PriceForOne * $visites;
 
         // Create a new social media item with total_price

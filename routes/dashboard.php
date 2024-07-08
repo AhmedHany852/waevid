@@ -96,7 +96,7 @@ Route::group([
     Route::get('/reviews', [ReviewController::class, 'index']);
     Route::get('/reviews/{id}', [ReviewController::class, 'show']);
     Route::delete('/reviews/{id}', [ReviewController::class, 'destroy']);
-    Route::get('/review/app/{apartment_id}', [ReviewController::class, 'show_review']);
+
 
     Route::get('/coupons', [CouponsController::class, 'index']);
     Route::post('/coupons', [CouponsController::class, 'store']);

@@ -44,8 +44,6 @@ Route::group([
 Route::post('/review', [ReviewController::class, 'store']);
 Route::post('/review/{review}', [ReviewController::class, 'update']);
 Route::delete('/review/{review}', [ReviewController::class, 'destroy']);
-
-Route::get('/review/app/{apartment_id}', [ReviewController::class, 'show_review']);
 Route::get('/review/{id}', [ReviewController::class, 'show']);
 
 ///user profile
