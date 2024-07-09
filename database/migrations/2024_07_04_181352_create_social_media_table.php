@@ -22,7 +22,6 @@ return new class extends Migration
             $table->text('url_description')->nullable();
             $table->text('speed_description')->nullable();
             $table->string('name');
-            $table->string('url')->nullable();
             $table->string('photo_description')->nullable();
             $table->integer('minimum_order')->default(1);
             $table->timestamps();
