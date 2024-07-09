@@ -5,13 +5,11 @@ use App\Http\Controllers\AppUser\AppUsersController;
 
 
 use App\Http\Controllers\AppUser\AuthController;
-use App\Http\Controllers\AppUser\HomeController;
+use App\Http\Controllers\AppUser\OrderController;
 use App\Http\Controllers\AppUser\ReviewController;
 
 use App\Http\Controllers\AppUser\UserProfileController;
-
-
-
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -50,9 +48,14 @@ Route::get('/review/{id}', [ReviewController::class, 'show']);
 Route::get('/user-profile', [UserProfileController::class, 'index']);
 Route::post('/update-profile', [UserProfileController::class, 'updateProfile']);
 Route::get('/deactive-account', [UserProfileController::class, 'deactive_account']);
-
+/////
+Route::post('/booked-social-media', [OrderController::class, 'store']);
 });
 /////home page web
+Route::get('/tabby-sucess', [OrderController::class, 'sucess'])->name('success-ur');
+Route::get('/tabby-cancel', [OrderController::class, 'cancel'])->name('cancel-ur');
+Route::get('/tabby-failure', [OrderController::class, 'failure'])->name('failure-ur');
+Route::get('/paylink-result', [OrderController::class, 'paylinkResult'])->name('paylink-result');
 
 Route::post('/contact-us', [App\Http\Controllers\HomeController::class, 'contactUs']);
 Route::get('/home-settings', [App\Http\Controllers\HomeController::class, 'Settings']);
