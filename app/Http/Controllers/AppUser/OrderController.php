@@ -17,7 +17,7 @@ class OrderController extends Controller
     public function __construct()
     {
         $this->paylink = new paylinkPayment();
-        $this->tabby = new TabbyPayment();
+
     }
     /**
      * Display a listing of the resource.
@@ -42,8 +42,8 @@ class OrderController extends Controller
     {
         $request->validate([
             'social_media_id' => 'required|exists:social_media,id',
-            'visites' => 'required|integer|min:100',
-            'url' => 'nullable|url',
+            'visites' => 'required|integer',
+            // 'url' => 'nullable|url',
             'payment_method' => 'required|string',
         ]);
        $social_media =  SocialMedia::find($request->social_media_id);

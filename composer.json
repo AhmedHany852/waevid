@@ -9,6 +9,7 @@
         "barryvdh/laravel-dompdf": "^2.2",
         "carlos-meneses/laravel-mpdf": "^2.1",
         "guzzlehttp/guzzle": "^7.8",
+        "irakan/paylink": "^1.1",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
