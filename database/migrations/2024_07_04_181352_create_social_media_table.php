@@ -21,7 +21,6 @@ return new class extends Migration
             $table->integer('visites_minimum')->default(100);
             $table->text('url_description')->nullable();
             $table->text('speed_description')->nullable();
-            $table->decimal('total_price', 8, 2)->nullable();
             $table->string('name');
             $table->string('photo_description')->nullable();
             $table->integer('minimum_order')->default(1);
