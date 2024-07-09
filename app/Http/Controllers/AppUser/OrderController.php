@@ -5,7 +5,6 @@ namespace App\Http\Controllers\AppUser;
 use App\Models\Order;
 use App\Models\SocialMedia;
 use Illuminate\Http\Request;
-use App\Services\TabbyPayment;
 use App\Services\paylinkPayment;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -13,7 +12,6 @@ use Illuminate\Support\Facades\Auth;
 class OrderController extends Controller
 {
     public $paylink;
-    public $tabby;
     public function __construct()
     {
         $this->paylink = new paylinkPayment();
@@ -40,17 +38,18 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
+
         $request->validate([
             'social_media_id' => 'required|exists:social_media,id',
             'visites' => 'required|integer',
-            // 'url' => 'nullable|url',
+             'url' => 'nullable|url',
             'payment_method' => 'required|string',
         ]);
-       $social_media =  SocialMedia::find($request->social_media_id);
+        $social_media =  SocialMedia::find($request->social_media_id);
         $PriceForOne = $social_media ->price / 100;
-        $totalPrice =  $PriceForOne * $ $request->visites;
-       $user =Auth::guard('app_users')->user();
-       $order = Order::create([
+        $totalPrice =  $PriceForOne * $request->visites;
+        $user =Auth::guard('app_users')->user();
+        $order = Order::create([
             'user_id' => Auth::guard('app_users')->user()->id,
             'social_media_id' => $request->social_media_id,
             'visites' => $request->visites,
@@ -58,48 +57,49 @@ class OrderController extends Controller
             'total_price' => $totalPrice,
             'payment_method' =>  $request->payment_method,
         ]);
-        if ($request->payment == 'Tabby') {
-            $items = collect([]);
-            $items->push([
-                'title' => 'title',
-                'quantity' => 2,
-                'unit_price' => 20,
-                'category' => 'Clothes',
-            ]);;
 
-            $order_data = [
-                'amount' =>  $totalPrice,
-                'currency' => 'SAR',
-                'description' => 'description',
-                'full_name' => $user->name ?? 'user_name',
-                'buyer_phone' => $user->phone ?? '9665252123',
-                //  'buyer_email' => 'card.success@tabby.ai',//this test
-                  'buyer_email' =>  $user->email ?? 'user@gmail.com',
-                'address' => 'Saudi Riyadh',
-                'city' => 'Riyadh',
-                'zip' => '1234',
-                'order_id' => " $order->id",
-                'registered_since' =>  $order->created_at,
-                'loyalty_level' => 0,
-                'success-url' => route('success-ur-subscription'),
-                'cancel-url' => route('cancel-ur-subscription'),
-                'failure-url' => route('failure-ur-subscription'),
-                'items' =>  $items,
-            ];
+        // if ($request->payment_method == 'Tabby') {
+        //     $items = collect([]);
+        //     $items->push([
+        //         'title' => 'title',
+        //         'quantity' => 2,
+        //         'unit_price' => 20,
+        //         'category' => 'Clothes',
+        //     ]);;
 
-            $payment = $this->tabby->createSession($order_data);
+        //     $order_data = [
+        //         'amount' =>  $totalPrice,
+        //         'currency' => 'SAR',
+        //         'description' => 'description',
+        //         'full_name' => $user->name ?? 'user_name',
+        //         'buyer_phone' => $user->phone ?? '9665252123',
+        //         //  'buyer_email' => 'card.success@tabby.ai',//this test
+        //           'buyer_email' =>  $user->email ?? 'user@gmail.com',
+        //         'address' => 'Saudi Riyadh',
+        //         'city' => 'Riyadh',
+        //         'zip' => '1234',
+        //         'order_id' => " $order->id",
+        //         'registered_since' =>  $order->created_at,
+        //         'loyalty_level' => 0,
+        //         'success-url' => route('success-ur-subscription'),
+        //         'cancel-url' => route('cancel-ur-subscription'),
+        //         'failure-url' => route('failure-ur-subscription'),
+        //         'items' =>  $items,
+        //     ];
 
-            $id = $payment->id;
+        //     $payment = $this->tabby->createSession($order_data);
 
-            $redirect_url = $payment->configuration->available_products->installments[0]->web_url;
+        //     $id = $payment->id;
 
-            return  $redirect_url;
-        }
-        elseif ($request->payment == 'Paylink') {
+        //     $redirect_url = $payment->configuration->available_products->installments[0]->web_url;
+
+        //     return  $redirect_url;
+        // }
+        if ($request->payment_method == 'Paylink') {
 
             $data = [
                 'amount' => $totalPrice,
-                'callBackUrl' => route('paylink-result-subscription'),
+                'callBackUrl' => route('paylink-result'),
                 'clientEmail' => $user->email ?? 'test@gmail.com',
                 'clientMobile' => $user->phone ?? '9665252123',
                 'clientName' => $user->name ?? 'user_name',

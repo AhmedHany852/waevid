@@ -52,9 +52,6 @@ Route::get('/deactive-account', [UserProfileController::class, 'deactive_account
 Route::post('/booked-social-media', [OrderController::class, 'store']);
 });
 /////home page web
-Route::get('/tabby-sucess', [OrderController::class, 'sucess'])->name('success-ur');
-Route::get('/tabby-cancel', [OrderController::class, 'cancel'])->name('cancel-ur');
-Route::get('/tabby-failure', [OrderController::class, 'failure'])->name('failure-ur');
 Route::get('/paylink-result', [OrderController::class, 'paylinkResult'])->name('paylink-result');
 
 Route::post('/contact-us', [App\Http\Controllers\HomeController::class, 'contactUs']);

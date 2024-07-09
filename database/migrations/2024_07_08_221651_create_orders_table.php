@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('app_users')->onDelete('cascade');
-            $table->unsignedBigInteger('social_media');
+            $table->unsignedBigInteger('social_media_id');
             $table->foreign('social_media_id')->references('id')->on('social_media')->onDelete('cascade');
             $table->integer('visites')->default(100);
             $table->decimal('total_price')->default(0.00);
