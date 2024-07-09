@@ -110,4 +110,5 @@ Route::group([
     Route::get('/social-media/{id}', [SocialMediaController::class, 'show']);
     Route::put('/social-media/{id}', [SocialMediaController::class, 'update']);
     Route::delete('/social-media/{id}', [SocialMediaController::class, 'destroy']);
+    Route::get('getSocialCount', [SocialMediaController::class, 'SocialCount']);
 });

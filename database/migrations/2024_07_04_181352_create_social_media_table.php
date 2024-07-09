@@ -18,11 +18,9 @@ return new class extends Migration
             $table->string('price_description')->nullable();
             $table->text('description')->nullable();
             $table->string('status')->nullable();
-            $table->integer('visites')->default(100);
             $table->integer('visites_minimum')->default(100);
             $table->text('url_description')->nullable();
             $table->text('speed_description')->nullable();
-            $table->decimal('total_price', 8, 2)->nullable();
             $table->string('name');
             $table->string('url')->nullable();
             $table->string('photo_description')->nullable();
