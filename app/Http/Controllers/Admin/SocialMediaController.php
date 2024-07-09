@@ -30,11 +30,9 @@ class SocialMediaController extends Controller
             'price_description' => 'nullable|string|max:255',
             'description' => 'nullable|string',
             'status' => 'nullable|string|max:255',
-            'visites' => 'required|integer|min:0',
             'visites_minimum' => 'required|integer|min:0',
             'url_description' => 'nullable|string',
             'speed_description' => 'nullable|string',
-            'url' => 'required|string|max:255',
             'photo_description' => 'nullable|string',
             'minimum_order' => 'nullable|integer|min:1',
         ]);
@@ -51,33 +49,18 @@ class SocialMediaController extends Controller
             $photo = null;
         }
 
-        $visites = $request->visites;
-        //$visitesMinimum = $request->visites_minimum;
+        $visitesMinimum = $request->visites_minimum;
 
-        // if ($visites >= $visitesMinimum) {
-        //     return response()->json(['error' => 'The number of visits must be greater than or equal to the minimum visits.'], 422);
-        // }
-
-        // Calculate total_price
-        // $PriceForOne = $request->price / $request->visites;
-        // $totalPrice =  $PriceForOne  * $request->visites;
-        $pricePerVisit = $request->price / 100;
-        $totalPrice = $pricePerVisit * $visites;
-
-        // Create a new social media item with total_price
         $socialMedia = SocialMedia::create([
             'photo' => $photo,
             'price' => $request->price,
             'price_description' => $request->price_description,
             'description' => $request->description,
             'status' => $request->status,
-            'visites' => $request->visites ?? 100,
             'visites_minimum' => $request->visites_minimum ?? 100,
             'url_description' => $request->url_description,
             'speed_description' => $request->speed_description,
-            'total_price' => $totalPrice,
             'name' => $request->name,
-            'url' => $request->url,
             'photo_description' => $request->photo_description,
             'minimum_order' => $request->minimum_order ?? 1,
         ]);
@@ -107,11 +90,9 @@ class SocialMediaController extends Controller
             'price_description' => 'nullable|string|max:255',
             'description' => 'nullable|string',
             'status' => 'nullable|string|max:255',
-            'visites' => 'nullable|integer|min:0',
             'visites_minimum' => 'nullable|integer|min:0',
             'url_description' => 'nullable|string',
             'speed_description' => 'nullable|string',
-            'url' => 'nullable|string|max:255',
             'photo_description' => 'nullable|string',
             'minimum_order' => 'nullable|integer|min:1',
         ]);
@@ -129,17 +110,7 @@ class SocialMediaController extends Controller
         } else {
             $photo =  $socialMedia->photo;
         }
-        // Ensure visites is greater than or equal to visites_minimum
-        $visites = $request->visites;
         $visitesMinimum = $request->visites_minimum;
-
-        // if ($visites <= $visitesMinimum) {
-        //     return response()->json(['error' => 'The number of visits must be greater than or equal to the minimum visits.'], 422);
-        // }
-        // Calculate total_price
-        $PriceForOne = $request->price / 100;
-        $totalPrice =  $PriceForOne * $visites;
-
         // Create a new social media item with total_price
         $socialMedia = SocialMedia::create([
             'photo' => $photo,
@@ -147,13 +118,10 @@ class SocialMediaController extends Controller
             'price_description' => $request->price_description,
             'description' => $request->description,
             'status' => $request->status,
-            'visites' => $request->visites ?? 100,
             'visites_minimum' => $request->visites_minimum ?? 100,
             'url_description' => $request->url_description,
             'speed_description' => $request->speed_description,
-            'total_price' => $totalPrice,
             'name' => $request->name,
-            'url' => $request->url,
             'photo_description' => $request->photo_description,
             'minimum_order' => $request->minimum_order ?? 1,
         ]);
