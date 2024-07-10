@@ -11,6 +11,7 @@ use App\Models\Booking;
 use App\Models\Membership;
 use App\Events\BookedEvent;
 use App\Models\OrderPayment;
+use App\Models\OrderServiceGame;
 use App\Models\Subscription;
 use Illuminate\Http\Request;
 use App\Models\PaymentGetway;
@@ -87,5 +88,32 @@ class paylinkPayment
             }
         }
     }
+    public function calbackPayment2(Request $request)
+    {
+        $response =  $this->client->getInvoice($request->transactionNo);
 
+        if ($response['orderStatus'] == 'Paid') {
+            try {
+                DB::beginTransaction();
+                $order = OrderServiceGame::where('id', $response->order->reference_id)->first();
+                $order_payment =   OrderPayment::create([
+                    'payment_type' => 'Paylink',
+                    'customer_name' => $response['gatewayOrderRequest']['clientName'],
+                    'transaction_id' => $request->transactionNo,
+                    'transaction_url' =>  $response['mobileUrl'],
+                    'order_service_games_id' =>  $order->id,
+                    'price' =>   $response['amount'],
+                    'transaction_status' => $response['orderStatus'],
+                    'is_success' => $response['success'],
+                    'transaction_date' => $response['paymentReceipt']['paymentDate'],
+                ]);
+                DB::commit();
+                return response()->json(['message' => 'payment created successfully'], 201);
+            } catch (\Throwable $th) {
+                dd($th->getMessage(), $th->getLine());
+                DB::rollBack();
+                return response()->json(["error" => 'error', 'Data' => 'payment failed'], 404);
+            }
+        }
+    }
 }

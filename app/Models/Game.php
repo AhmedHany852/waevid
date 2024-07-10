@@ -11,7 +11,10 @@ class Game extends Model
 
     protected $fillable = ['name', 'description', 'price', 'photo','status'];
 
-
+    public function orders()
+    {
+        return $this->morphMany('App\Models\OrderServiceGame', 'orderable');
+    }
 
     // public function booking()
     // {
