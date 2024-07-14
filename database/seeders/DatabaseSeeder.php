@@ -14,8 +14,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->call(PermissionTableSeeder::class);
-        $this->call(CreateAdminUserSeeder::class);
+        // $this->call(PermissionTableSeeder::class);
+        // $this->call(CreateAdminUserSeeder::class);
 
 
         \App\Models\AppUsers::factory()->create([
