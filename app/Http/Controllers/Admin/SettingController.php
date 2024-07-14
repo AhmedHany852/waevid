@@ -86,8 +86,10 @@ class SettingController extends Controller
         $settings = Setting::pluck('value', 'key')
             ->toArray();
 
-        $image = asset('uploads/settings/' .  $settings['site_logo']);
-        $settings['site_logo'] =    $image;
+        $image = asset('uploads/settings/' .  $settings['site_logo_single']);
+        $settings['site_logo_single'] =    $image;
+        $image2 = asset('uploads/settings/' .  $settings['site_logo_full']);
+        $settings['site_logo_full'] =    $image2;
         return response()->json(['isSuccess' => true, 'data' =>    $settings], 200);
     }
 
