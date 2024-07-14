@@ -17,8 +17,10 @@ class SettingController extends Controller
     {
         $settings = Setting::pluck('value', 'key')
             ->toArray();
-            $image = asset('uploads/settings/' .  $settings['site_logo']);
-            $settings['site_logo'] =    $image;
+            $image = asset('uploads/settings/' .  $settings['site_logo_single']);
+            $image2 = asset('uploads/settings/' .  $settings['site_logo_full']);
+            $settings['site_logo_single'] =    $image;
+            $settings['site_logo_full'] =    $image2;
         return  $settings;
     }
 
@@ -36,23 +38,19 @@ class SettingController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'site_logo' => '',
-            'site_name' => '',
-            'info_email' => '',
-            'mobile' => '',
-            'snapchat' => '',
-            'link_android' => '',
-            'Link_os' => '',
-            'tiktok' => '',
-            'instagram' => '',
-            'maintenance_mode' => '',
-            'siteMaintenanceMsg' => '',
-            'tax_added_value' => '',
-            'site_name_en' => '',
-            'cr' => '',
-            'vat' => '',
-            'available_bookings' => '',
-            'available_discount' => '',
+
+            "site_logo_single"=> '',
+           "site_logo_full"=> '',
+            "site_name"=> '',
+            "site_name_en"=> '',
+            "info_email"=> '',
+            "mobile"=> '',
+            "tax_added_value"=> '',
+            "tiktok"=> '',
+            "instagram"=> '',
+            "snapchat"=> '',
+            "siteMaintenanceMsg"=> '',
+            "maintenance_mode"=> '',
         ]);
 
         if ($validator->fails()) {
@@ -64,13 +62,18 @@ class SettingController extends Controller
 
         foreach ($validator->validated() as $key => $input) {
 
-            if (request()->hasFile('site_logo') && $request->file('site_logo')->isValid()) {
+            if (request()->hasFile('site_logo_single') && $request->file('site_logo_single')->isValid()) {
 
-                $avatar = $request->file('site_logo');
+                $avatar = $request->file('site_logo_single');
                 $image = upload($avatar, public_path('uploads/settings'));
                 $input = $image;
             }
+            if (request()->hasFile('site_logo_full') && $request->file('site_logo_full')->isValid()) {
 
+                $avatar = $request->file('site_logo_full');
+                $image = upload($avatar, public_path('uploads/settings'));
+                $input = $image;
+            }
             $settings =  Setting::updateOrCreate(
                 [
                     'key' => $key,
