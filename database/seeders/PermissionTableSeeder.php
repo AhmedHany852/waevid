@@ -26,14 +26,6 @@ class PermissionTableSeeder extends Seeder
             "create-service",
             "update-service",
             "delete-service",
-            "coupon-list",
-            "create-coupon",
-            "update-coupon",
-            "delete-coupon",
-            "offer-list",
-            "create-offer",
-            "update-offer",
-            "delete-offer",
             "user-list",
             "create-user",
             "update-user",
@@ -42,10 +34,6 @@ class PermissionTableSeeder extends Seeder
             "create-role",
             "update-role",
             "delete-role",
-            "question-list",
-            'create-question',
-            'update-question',
-            "delete-question",
             "contact-us-list",
             'setting',
             'update-setting',
@@ -55,12 +43,8 @@ class PermissionTableSeeder extends Seeder
             'update-privacy',
             'about-us-list',
             'update-about-us',
-
-
-
-
-
-
+            "all-payments",
+            "all-orders",
         ];
 
         foreach ($permissions as $permission) {
