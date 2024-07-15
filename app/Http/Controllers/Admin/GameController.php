@@ -17,7 +17,7 @@ class GameController extends Controller
     public function index(Request $request)
     {
         $games = Game::paginate($request->get('per_page', 50));
-        return response()->json(['successful' => true, 'data' =>    $games], 200);
+        return response()->json(['successful ' => true, 'data' =>    $games], 200);
     }
 
     /**
