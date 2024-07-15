@@ -71,6 +71,9 @@ class ServiceController extends Controller
      */
     public function show(Service $service)
     {
+        if( $service->photo){
+            $service->photo = asset('uploads/service_photo/'.$service->photo)  ;
+        }
         return response()->json(['successful' => true, 'data' =>    $service], 200);
     }
 

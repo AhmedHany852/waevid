@@ -59,8 +59,8 @@ class GameController extends Controller
             'photo_description' => $request->photo_description,
 
         ]);
-        if(  $game->photo){
-            $game->photo = asset('uploads/games_photo/'. $game->photo)  ;
+        if(   $games->photo){
+             $games->photo = asset('uploads/games_photo/'.  $games->photo)  ;
        }
         return response()->json(['successful' => true, 'data' =>    $games], 200);
     }
@@ -70,6 +70,9 @@ class GameController extends Controller
      */
     public function show(Game $game)
     {
+        if( $game->photo){
+            $game->photo = asset('uploads/games_photo/'.$game->photo)  ;
+        }
         return response()->json(['successful' => true, 'data' => $game], 200);
     }
 
