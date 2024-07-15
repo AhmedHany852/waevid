@@ -1,6 +1,6 @@
 <?php
 
-
+use App\Http\Controllers\AppUser\AccountTypeController;
 use App\Models\Order;
 
 
@@ -53,6 +53,9 @@ Route::get('/deactive-account', [UserProfileController::class, 'deactive_account
 /////
 Route::post('/booked-social-media', [OrderController::class, 'store']);
 Route::post('/booked', [OrderServiceGameController::class, 'store']);
+////account type
+Route::get('/accounts', [AccountTypeController::class, 'index']);
+Route::post('/accounts', [AccountTypeController::class, 'store']);
 });
 /////home page web
 Route::get('/paylink-result', [OrderController::class, 'paylinkResult'])->name('paylink-result');
