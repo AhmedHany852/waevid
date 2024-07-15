@@ -62,9 +62,9 @@ class GameController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Game $games)
+    public function show(Game $game)
     {
-        return response()->json(['successful' => true, 'data' =>$games], 200);
+        return response()->json(['successful' => true, 'data' => $game], 200);
     }
 
     /**
