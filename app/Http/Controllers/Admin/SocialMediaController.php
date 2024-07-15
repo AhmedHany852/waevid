@@ -112,7 +112,7 @@ class SocialMediaController extends Controller
         }
         $visitesMinimum = $request->visites_minimum;
         // Create a new social media item with total_price
-        $socialMedia = SocialMedia::create([
+        $socialMedia->update([
             'photo' => $photo,
             'price' => $request->price,
             'price_description' => $request->price_description,
