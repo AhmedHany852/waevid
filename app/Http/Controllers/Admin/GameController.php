@@ -52,6 +52,7 @@ class GameController extends Controller
             'price' => $request->price,
             'photo' => $photo,
             'status' => $request->status,
+            'photo_description' => $request->photo_description,
 
         ]);
 
@@ -105,6 +106,7 @@ class GameController extends Controller
             'price' => $request->price,
             'photo' => $photo,
             'status' => $request->has('status') ? $request->status : 1,
+            'photo_description' => $request->photo_description,
 
         ]);
 

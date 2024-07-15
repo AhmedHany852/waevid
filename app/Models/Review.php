@@ -8,19 +8,19 @@ use Illuminate\Database\Eloquent\Model;
 class Review extends Model
 {
     use HasFactory;
-    protected $guarded =[];
+    protected $guarded = [];
     public function user()
     {
         return $this->belongsTo(AppUsers::class);
     }
-    public function service()
+    public function reviewable()
     {
-        return $this->belongsTo(Service::class);
+        return $this->morphTo();
     }
     protected $casts = [
-        'apartment_id'=>'integer',
-        'user_id'=>'integer',
-        'rating'=>'double',
+        'user_id' => 'integer',
+        'rating' => 'double',
 
     ];
+
 }

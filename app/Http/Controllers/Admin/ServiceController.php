@@ -52,6 +52,7 @@ class ServiceController extends Controller
             'price' => $request->price,
             'photo' => $photo,
             'status' => $request->status,
+            'photo_description' => $request->photo_description,
 
         ]);
         // return response()->json(['message' => 'service created successfully', 'data' => $service], 200);
@@ -105,6 +106,7 @@ class ServiceController extends Controller
             'price' => $request->price,
             'photo' => $photo,
             'status' => $request->has('status') ? $request->status : 1,
+            'photo_description' => $request->photo_description,
 
         ]);
 
