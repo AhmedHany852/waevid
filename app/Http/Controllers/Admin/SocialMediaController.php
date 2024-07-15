@@ -136,6 +136,16 @@ class SocialMediaController extends Controller
     {
         $socialMedia = SocialMedia::findOrFail($id);
         $socialMedia->delete();
-        return response()->json(null, 204);
+        return response()->json(null, 200);
+    }
+    public function SocialCount()
+    {
+        $count = SocialMedia::count();
+
+        return response()->json([
+            "successful" => true,
+            "message" => "عملية العرض تمت بنجاح",
+            'data' => $count
+        ]);
     }
 }

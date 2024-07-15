@@ -18,6 +18,7 @@ use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\SocialMediaController;
 use App\Http\Controllers\Admin\TermsController;
 use App\Http\Controllers\Admin\UserController;
+
 use Illuminate\Support\Facades\Route;
 
 
@@ -108,7 +109,7 @@ Route::group([
     Route::get('/social-media', [SocialMediaController::class, 'index']);
     Route::post('/social-media', [SocialMediaController::class, 'store']);
     Route::get('/social-media/{id}', [SocialMediaController::class, 'show']);
-    Route::put('/social-media/{id}', [SocialMediaController::class, 'update']);
+    Route::post('/social-media/{id}', [SocialMediaController::class, 'update']);
     Route::delete('/social-media/{id}', [SocialMediaController::class, 'destroy']);
     Route::get('getSocialCount', [SocialMediaController::class, 'SocialCount']);
 });

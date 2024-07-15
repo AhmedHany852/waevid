@@ -16,9 +16,8 @@ class GameController extends Controller
      */
     public function index(Request $request)
     {
-        $games=Game::paginate($request->get('per_page', 50));
-        return response()->json(['isSuccess' => true, 'data' =>    $games], 200);
-
+        $games = Game::paginate($request->get('per_page', 50));
+        return response()->json(['successful ' => true, 'data' =>    $games], 200);
     }
 
     /**
@@ -47,30 +46,31 @@ class GameController extends Controller
         } else {
             $photo = null;
         }
-        $games =Game::create([
+        $games = Game::create([
             'name' => $request->name,
             'description' => $request->description,
             'price' => $request->price,
             'photo' => $photo,
-            'status' => $request->status ,
+            'status' => $request->status,
+            'photo_description' => $request->photo_description,
 
         ]);
 
-       return response()->json(['isSuccess' => true, 'data' =>    $games], 200);
+        return response()->json(['successful' => true, 'data' =>    $games], 200);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Game $games)
+    public function show(Game $game)
     {
-        return response()->json(['isSuccess' => true, 'data' =>    $games], 200);
+        return response()->json(['successful' => true, 'data' => $game], 200);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request,Game $game)
+    public function update(Request $request, Game $game)
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
@@ -106,10 +106,11 @@ class GameController extends Controller
             'price' => $request->price,
             'photo' => $photo,
             'status' => $request->has('status') ? $request->status : 1,
+            'photo_description' => $request->photo_description,
 
         ]);
 
-        return response()->json(['isSuccess' => true, 'data' =>    $game], 200);
+        return response()->json(['successful' => true, 'data' =>    $game], 200);
     }
 
 
@@ -120,7 +121,7 @@ class GameController extends Controller
     {
 
         if (!$game) {
-        return response()->json(['message' => 'games not found'], 404);
+            return response()->json(['message' => 'games not found'], 404);
         }
         if ($game->photo) {
             // Assuming 'personal_photo' is the attribute storing the file name
@@ -133,8 +134,7 @@ class GameController extends Controller
         // Delete the user
         $game->delete();
 
-        return response()->json(['message' => 'العملية تمت بنجاح']);
-
+        return response()->json(null, 200);
     }
     public function getGameCount()
     {
@@ -146,5 +146,4 @@ class GameController extends Controller
             'data' => $count
         ]);
     }
-
 }

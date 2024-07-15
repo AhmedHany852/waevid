@@ -16,9 +16,8 @@ class ServiceController extends Controller
      */
     public function index(Request $request)
     {
-        $service=Service::paginate($request->get('per_page', 50));
-        return response()->json(['isSuccess' => true, 'data' =>    $service], 200);
-
+        $service = Service::paginate($request->get('per_page', 50));
+        return response()->json(['successful' => true, 'data' =>    $service], 200);
     }
 
     /**
@@ -31,7 +30,7 @@ class ServiceController extends Controller
             'description' => 'required|string',
             'price' => 'required|numeric|min:0',
             'photo' => 'required|image|mimes:jpeg,webp,png,jpg,gif,pdf|max:2048',
-            'status' => 'required|in:services,game,social_media',
+            'status' => 'required',
 
         ]);
 
@@ -47,16 +46,17 @@ class ServiceController extends Controller
         } else {
             $photo = null;
         }
-        $service=Service::create([
+        $service = Service::create([
             'name' => $request->name,
             'description' => $request->description,
             'price' => $request->price,
             'photo' => $photo,
-            'status' => $request->status ,
+            'status' => $request->status,
+            'photo_description' => $request->photo_description,
 
         ]);
         // return response()->json(['message' => 'service created successfully', 'data' => $service], 200);
-       return response()->json(['isSuccess' => true, 'data' =>    $service], 200);
+        return response()->json(['successful' => true, 'data' =>    $service], 200);
     }
 
     /**
@@ -64,7 +64,7 @@ class ServiceController extends Controller
      */
     public function show(Service $service)
     {
-        return response()->json(['isSuccess' => true, 'data' =>    $service], 200);
+        return response()->json(['successful' => true, 'data' =>    $service], 200);
     }
 
     /**
@@ -77,7 +77,7 @@ class ServiceController extends Controller
             'description' => 'required|string',
             'price' => 'required|numeric|min:0',
             'photo' => 'nullable|image|mimes:jpeg,webp,png,jpg,gif,pdf|max:2048',
-            'status' => 'required|in:services,game,social_media',
+            'status' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -106,10 +106,11 @@ class ServiceController extends Controller
             'price' => $request->price,
             'photo' => $photo,
             'status' => $request->has('status') ? $request->status : 1,
+            'photo_description' => $request->photo_description,
 
         ]);
 
-        return response()->json(['isSuccess' => true, 'data' =>    $service], 200);
+        return response()->json(['successful' => true, 'data' =>    $service], 200);
     }
 
 
@@ -120,7 +121,7 @@ class ServiceController extends Controller
     {
         // Check if the service exists
         if (!$service) {
-        return response()->json(['message' => 'Service not found'], 404);
+            return response()->json(['message' => 'Service not found'], 404);
         }
         if ($service->photo) {
             // Assuming 'personal_photo' is the attribute storing the file name
@@ -133,8 +134,7 @@ class ServiceController extends Controller
         // Delete the user
         $service->delete();
 
-        return response()->json(['message' => 'العملية تمت بنجاح']);
-
+        return response()->json(null, 200);
     }
     public function getServiceCount()
     {
@@ -146,5 +146,4 @@ class ServiceController extends Controller
             'data' => $count
         ]);
     }
-
 }
