@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Models\SocialMedia;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class SocialMediaController extends Controller
@@ -15,6 +16,11 @@ class SocialMediaController extends Controller
     public function index(Request $request)
     {
         $socialMediaItems = SocialMedia::paginate($request->get('per_page', 50));
+        foreach($socialMediaItems as $socialMediaItem){
+        if(  $socialMediaItem->photo){
+            $socialMediaItem->photo = asset('uploads/social_photo/'. $socialMediaItem->photo)  ;
+          }
+        }
         return response()->json($socialMediaItems);
     }
 
@@ -23,6 +29,7 @@ class SocialMediaController extends Controller
      */
     public function store(Request $request)
     {
+
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'price' => 'required|numeric|min:0',
@@ -43,8 +50,7 @@ class SocialMediaController extends Controller
         }
         if ($request->file('photo')) {
             $avatar = $request->file('photo');
-            $avatar->store('uploads/games_photo/', 'public');
-            $photo = $avatar->hashName();
+            $photo = upload($avatar,public_path('uploads/social_photo/'));
         } else {
             $photo = null;
         }
@@ -64,7 +70,9 @@ class SocialMediaController extends Controller
             'photo_description' => $request->photo_description,
             'minimum_order' => $request->minimum_order ?? 1,
         ]);
-
+        if(  $socialMedia->photo){
+            $socialMedia->photo = asset('uploads/social_photo/'. $socialMedia->photo)  ;
+       }
         return response()->json($socialMedia, 201);
     }
 
@@ -75,6 +83,9 @@ class SocialMediaController extends Controller
     public function show($id)
     {
         $socialMedia = SocialMedia::findOrFail($id);
+        if(  $socialMedia->photo){
+            $socialMedia->photo = asset('uploads/social_photo/'. $socialMedia->photo)  ;
+       }
         return response()->json($socialMedia);
     }
 
@@ -86,7 +97,6 @@ class SocialMediaController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'price' => 'required|numeric|min:0',
-            'photo' => 'nullable|string|max:255',
             'price_description' => 'nullable|string|max:255',
             'description' => 'nullable|string',
             'status' => 'nullable|string|max:255',
@@ -102,17 +112,19 @@ class SocialMediaController extends Controller
             ], 400);
         }
         $socialMedia = SocialMedia::findOrFail($id);
-
-        if ($request->file('photo')) {
+        if ($request->hasFile('photo')) {
+            if ($socialMedia->photo) {
+                Storage::delete('uploads/social_photo/' . $socialMedia->photo);
+            }
             $avatar = $request->file('photo');
-            $avatar->store('uploads/games_photo/', 'public');
-            $photo = $avatar->hashName();
+            $photo = upload($avatar,public_path('uploads/social_photo/'));
         } else {
             $photo =  $socialMedia->photo;
         }
+
         $visitesMinimum = $request->visites_minimum;
         // Create a new social media item with total_price
-        $socialMedia = SocialMedia::create([
+        $socialMedia->update([
             'photo' => $photo,
             'price' => $request->price,
             'price_description' => $request->price_description,
@@ -125,7 +137,9 @@ class SocialMediaController extends Controller
             'photo_description' => $request->photo_description,
             'minimum_order' => $request->minimum_order ?? 1,
         ]);
-
+        if(  $socialMedia->photo){
+             $socialMedia->photo = asset('uploads/social_photo/'. $socialMedia->photo)  ;
+        }
         return response()->json($socialMedia, 201);
     }
 

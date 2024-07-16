@@ -16,8 +16,13 @@ class ServiceController extends Controller
      */
     public function index(Request $request)
     {
-        $service = Service::paginate($request->get('per_page', 50));
-        return response()->json(['successful' => true, 'data' =>    $service], 200);
+        $services = Service::paginate($request->get('per_page', 50));
+        foreach($services as $service){
+            if( $service->photo){
+                $service->photo = asset('uploads/service_photo/'.$service->photo)  ;
+            }
+        }
+        return response()->json(['successful' => true, 'data' =>    $services], 200);
     }
 
     /**
@@ -41,8 +46,7 @@ class ServiceController extends Controller
         }
         if ($request->file('photo')) {
             $avatar = $request->file('photo');
-            $avatar->store('uploads/service_photo/', 'public');
-            $photo = $avatar->hashName();
+            $photo = upload($avatar,public_path('uploads/service_photo/'));
         } else {
             $photo = null;
         }
@@ -55,6 +59,9 @@ class ServiceController extends Controller
             'photo_description' => $request->photo_description,
 
         ]);
+        if( $service->photo){
+            $service->photo = asset('uploads/service_photo/'.$service->photo)  ;
+        }
         // return response()->json(['message' => 'service created successfully', 'data' => $service], 200);
         return response()->json(['successful' => true, 'data' =>    $service], 200);
     }
@@ -64,6 +71,9 @@ class ServiceController extends Controller
      */
     public function show(Service $service)
     {
+        if( $service->photo){
+            $service->photo = asset('uploads/service_photo/'.$service->photo)  ;
+        }
         return response()->json(['successful' => true, 'data' =>    $service], 200);
     }
 
@@ -94,8 +104,7 @@ class ServiceController extends Controller
             }
             // Store the new photo
             $avatar = $request->file('photo');
-            $avatar->store('uploads/service_photo/', 'public');
-            $photo = $avatar->hashName();
+            $photo = upload($avatar,public_path('uploads/service_photo/'));
         } else {
             $photo = $service->photo; // Retain the existing photo
         }
@@ -109,7 +118,9 @@ class ServiceController extends Controller
             'photo_description' => $request->photo_description,
 
         ]);
-
+        if( $service->photo){
+            $service->photo = asset('uploads/service_photo/'.$service->photo)  ;
+        }
         return response()->json(['successful' => true, 'data' =>    $service], 200);
     }
 

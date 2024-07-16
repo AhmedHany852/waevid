@@ -17,6 +17,11 @@ class GameController extends Controller
     public function index(Request $request)
     {
         $games = Game::paginate($request->get('per_page', 50));
+        foreach($games as $game){
+            if( $game->photo){
+                $game->photo = asset('uploads/games_photo/'.$game->photo)  ;
+            }
+        }
         return response()->json(['successful ' => true, 'data' =>    $games], 200);
     }
 
@@ -41,8 +46,7 @@ class GameController extends Controller
         }
         if ($request->file('photo')) {
             $avatar = $request->file('photo');
-            $avatar->store('uploads/games_photo/', 'public');
-            $photo = $avatar->hashName();
+            $photo = upload($avatar,public_path('uploads/games_photo/'));
         } else {
             $photo = null;
         }
@@ -55,7 +59,9 @@ class GameController extends Controller
             'photo_description' => $request->photo_description,
 
         ]);
-
+        if(   $games->photo){
+             $games->photo = asset('uploads/games_photo/'.  $games->photo)  ;
+       }
         return response()->json(['successful' => true, 'data' =>    $games], 200);
     }
 
@@ -64,6 +70,9 @@ class GameController extends Controller
      */
     public function show(Game $game)
     {
+        if( $game->photo){
+            $game->photo = asset('uploads/games_photo/'.$game->photo)  ;
+        }
         return response()->json(['successful' => true, 'data' => $game], 200);
     }
 
@@ -94,8 +103,7 @@ class GameController extends Controller
             }
             // Store the new photo
             $avatar = $request->file('photo');
-            $avatar->store('uploads/games_photo/', 'public');
-            $photo = $avatar->hashName();
+            $photo = upload($avatar,public_path('uploads/games_photo/'));
         } else {
             $photo = $game->photo; // Retain the existing photo
         }
@@ -109,7 +117,9 @@ class GameController extends Controller
             'photo_description' => $request->photo_description,
 
         ]);
-
+        if(  $game->photo){
+             $game->photo = asset('uploads/games_photo/'. $game->photo)  ;
+        }
         return response()->json(['successful' => true, 'data' =>    $game], 200);
     }
 
