@@ -41,4 +41,26 @@ class GeneralController extends Controller
         }
         return response()->json(['successful ' => true, 'data' =>    $games], 200);
     }
+    public function showSocial(SocialMedia $socialMedia)
+    {
+
+        if(  $socialMedia->photo){
+            $socialMedia->photo = asset('uploads/social_photo/'. $socialMedia->photo)  ;
+       }
+        return response()->json($socialMedia);
+    }
+    public function showService(Service $service)
+    {
+        if( $service->photo){
+            $service->photo = asset('uploads/service_photo/'.$service->photo)  ;
+        }
+        return response()->json(['successful' => true, 'data' =>    $service], 200);
+    }
+    public function showGame(Game $game)
+    {
+        if( $game->photo){
+            $game->photo = asset('uploads/games_photo/'.$game->photo)  ;
+        }
+        return response()->json(['successful' => true, 'data' => $game], 200);
+    }
 }

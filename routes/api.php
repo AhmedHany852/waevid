@@ -66,6 +66,9 @@ Route::get('/paylink-result2', [OrderServiceGameController::class, 'paylinkResul
 Route::get('/social-media', [GeneralController::class, 'social_media']);
 Route::get('/services', [GeneralController::class, 'services']);
 Route::get('/games', [GeneralController::class, 'games']);
+Route::get('/social-media/{social}', [GeneralController::class, 'showSocial']);
+Route::get('/services/{service}', [GeneralController::class, 'showService']);
+Route::get('/games/{game}', [GeneralController::class, 'showGame']);
 /////home page web
 Route::post('/contact-us', [App\Http\Controllers\HomeController::class, 'contactUs']);
 Route::get('/home-settings', [App\Http\Controllers\HomeController::class, 'Settings']);
