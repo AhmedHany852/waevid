@@ -15,10 +15,13 @@ class Service extends Model
     {
         return $this->morphMany('App\Models\OrderServiceGame', 'orderable');
     }
+    public function review()
+    {
+        return $this->morphMany('App\Models\Review', 'reviewable');
+    }
 
     // public function booking()
     // {
     //     return $this->hasMany(Booking::class);
     // }
 }
-
