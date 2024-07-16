@@ -12,6 +12,7 @@ use App\Http\Controllers\AppUser\AuthController;
 use App\Http\Controllers\AppUser\OrderController;
 use App\Http\Controllers\AppUser\AppUsersController;
 use App\Http\Controllers\AppUser\AccountTypeController;
+use App\Http\Controllers\AppUser\GeneralController;
 use App\Http\Controllers\AppUser\UserProfileController;
 use App\Http\Controllers\AppUser\OrderServiceGameController;
 
@@ -56,6 +57,10 @@ Route::post('/booked', [OrderServiceGameController::class, 'store']);
 ////account type
 Route::get('/accounts', [AccountTypeController::class, 'index']);
 Route::post('/accounts', [AccountTypeController::class, 'store']);
+////////general
+Route::get('/social-media', [GeneralController::class, 'social_media']);
+Route::get('/services', [GeneralController::class, 'services']);
+Route::get('/games', [GeneralController::class, 'games']);
 });
 /////home page web
 Route::get('/paylink-result', [OrderController::class, 'paylinkResult'])->name('paylink-result');
