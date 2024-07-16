@@ -13,7 +13,7 @@ class ReviewController extends Controller
     public function store(Request $request)
     {
         // Validate the request data
-        $validatedData = $request->validate([
+        $validator = Validator::make($request->all(), [
             'user_id' => 'required|exists:app_users,id',
             'reviewable_type' => 'required|string',
             'reviewable_id' => 'required|integer',
