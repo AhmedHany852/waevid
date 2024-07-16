@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Models\SocialMedia;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class SocialMediaController extends Controller
@@ -28,6 +29,7 @@ class SocialMediaController extends Controller
      */
     public function store(Request $request)
     {
+
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'price' => 'required|numeric|min:0',
@@ -95,7 +97,6 @@ class SocialMediaController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'price' => 'required|numeric|min:0',
-            'photo' => 'nullable|string|max:255',
             'price_description' => 'nullable|string|max:255',
             'description' => 'nullable|string',
             'status' => 'nullable|string|max:255',
@@ -111,13 +112,16 @@ class SocialMediaController extends Controller
             ], 400);
         }
         $socialMedia = SocialMedia::findOrFail($id);
-
-        if ($request->file('photo')) {
+        if ($request->hasFile('photo')) {
+            if ($socialMedia->photo) {
+                Storage::delete('uploads/social_photo/' . $socialMedia->photo);
+            }
             $avatar = $request->file('photo');
             $photo = upload($avatar,public_path('uploads/social_photo/'));
         } else {
             $photo =  $socialMedia->photo;
         }
+
         $visitesMinimum = $request->visites_minimum;
         // Create a new social media item with total_price
         $socialMedia->update([
