@@ -41,8 +41,9 @@ class GeneralController extends Controller
         }
         return response()->json(['successful ' => true, 'data' =>    $games], 200);
     }
-    public function showSocial(SocialMedia $socialMedia)
+    public function showSocial($id)
     {
+        $socialMedia = SocialMedia::findOrFail($id);
 
         if(  $socialMedia->photo){
             $socialMedia->photo = asset('uploads/social_photo/'. $socialMedia->photo)  ;
