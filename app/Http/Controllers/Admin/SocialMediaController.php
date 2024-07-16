@@ -15,6 +15,11 @@ class SocialMediaController extends Controller
     public function index(Request $request)
     {
         $socialMediaItems = SocialMedia::paginate($request->get('per_page', 50));
+        foreach($socialMediaItems as $socialMediaItem){
+        if(  $socialMediaItem->photo){
+            $socialMediaItem->photo = asset('uploads/social_photo/'. $socialMediaItem->photo)  ;
+          }
+        }
         return response()->json($socialMediaItems);
     }
 
@@ -43,8 +48,7 @@ class SocialMediaController extends Controller
         }
         if ($request->file('photo')) {
             $avatar = $request->file('photo');
-            $avatar->store('uploads/games_photo/', 'public');
-            $photo = $avatar->hashName();
+            $photo = upload($avatar,public_path('uploads/social_photo/'));
         } else {
             $photo = null;
         }
@@ -64,7 +68,9 @@ class SocialMediaController extends Controller
             'photo_description' => $request->photo_description,
             'minimum_order' => $request->minimum_order ?? 1,
         ]);
-
+        if(  $socialMedia->photo){
+            $socialMedia->photo = asset('uploads/social_photo/'. $socialMedia->photo)  ;
+       }
         return response()->json($socialMedia, 201);
     }
 
@@ -75,6 +81,9 @@ class SocialMediaController extends Controller
     public function show($id)
     {
         $socialMedia = SocialMedia::findOrFail($id);
+        if(  $socialMedia->photo){
+            $socialMedia->photo = asset('uploads/social_photo/'. $socialMedia->photo)  ;
+       }
         return response()->json($socialMedia);
     }
 
@@ -105,8 +114,7 @@ class SocialMediaController extends Controller
 
         if ($request->file('photo')) {
             $avatar = $request->file('photo');
-            $avatar->store('uploads/games_photo/', 'public');
-            $photo = $avatar->hashName();
+            $photo = upload($avatar,public_path('uploads/social_photo/'));
         } else {
             $photo =  $socialMedia->photo;
         }
@@ -125,7 +133,9 @@ class SocialMediaController extends Controller
             'photo_description' => $request->photo_description,
             'minimum_order' => $request->minimum_order ?? 1,
         ]);
-
+        if(  $socialMedia->photo){
+             $socialMedia->photo = asset('uploads/social_photo/'. $socialMedia->photo)  ;
+        }
         return response()->json($socialMedia, 201);
     }
 
