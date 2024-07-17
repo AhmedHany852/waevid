@@ -1,20 +1,21 @@
 <?php
 
-use App\Models\Order;
-use Illuminate\Http\Request;
+use App\Http\Controllers\AppUser\AccountTypeController;
+use App\Http\Controllers\AppUser\AppUsersController;
 
-
-use App\Models\OrderServiceGame;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AppUser\ReviewController;
 
 use App\Http\Controllers\AppUser\AuthController;
-use App\Http\Controllers\AppUser\OrderController;
-use App\Http\Controllers\AppUser\AppUsersController;
-use App\Http\Controllers\AppUser\AccountTypeController;
 use App\Http\Controllers\AppUser\GeneralController;
-use App\Http\Controllers\AppUser\UserProfileController;
+use App\Http\Controllers\AppUser\OrderController;
+
 use App\Http\Controllers\AppUser\OrderServiceGameController;
+use App\Http\Controllers\AppUser\BestSellController;
+use App\Http\Controllers\AppUser\ReviewController;
+use App\Http\Controllers\AppUser\UserProfileController;
+use App\Models\Order;
+use App\Models\OrderServiceGame;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 
 /*
@@ -73,4 +74,9 @@ Route::get('/games/{game}', [GeneralController::class, 'showGame']);
 /////home page web
 Route::post('/contact-us', [App\Http\Controllers\HomeController::class, 'contactUs']);
 Route::get('/home-settings', [App\Http\Controllers\HomeController::class, 'Settings']);
+
+//best-sell
+Route::get('/best-sell-social-media', [BestSellController::class, 'bestSellSocialMedia']);
+Route::get('/best-sell-services', [BestSellController::class, 'bestSellServices']);
+Route::get('/best-sell-games', [BestSellController::class, 'bestSellGames']);
 require __DIR__ . '/dashboard.php';
