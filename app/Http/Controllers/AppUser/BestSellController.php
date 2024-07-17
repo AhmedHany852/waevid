@@ -23,11 +23,7 @@ class BestSellController extends Controller
         ]);
     }
 
-    /**
-     * Get the best-selling games.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function bestSellGames()
     {
         $bestSellGames = Game::orderByDesc('price')
