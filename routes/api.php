@@ -79,4 +79,5 @@ Route::get('/home-settings', [App\Http\Controllers\HomeController::class, 'Setti
 Route::get('/best-sell-social-media', [BestSellController::class, 'bestSellSocialMedia']);
 Route::get('/best-sell-services', [BestSellController::class, 'bestSellServices']);
 Route::get('/best-sell-games', [BestSellController::class, 'bestSellGames']);
+
 require __DIR__ . '/dashboard.php';
