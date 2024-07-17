@@ -71,13 +71,13 @@ Route::get('/games', [GeneralController::class, 'games']);
 Route::get('/social-media/{id}', [GeneralController::class, 'showSocial']);
 Route::get('/services/{service}', [GeneralController::class, 'showService']);
 Route::get('/games/{game}', [GeneralController::class, 'showGame']);
+//best-sell
+Route::get('/best/media', [BestSellController::class, 'bestSellSocialMedia']);
+Route::get('/best/services', [BestSellController::class, 'bestSellServices']);
+Route::get('/best/games', [BestSellController::class, 'bestSellGames']);
 /////home page web
 Route::post('/contact-us', [App\Http\Controllers\HomeController::class, 'contactUs']);
 Route::get('/home-settings', [App\Http\Controllers\HomeController::class, 'Settings']);
 
-//best-sell
-Route::get('/best-sell-social-media', [BestSellController::class, 'bestSellSocialMedia']);
-Route::get('/best-sell-services', [BestSellController::class, 'bestSellServices']);
-Route::get('/best-sell-games', [BestSellController::class, 'bestSellGames']);
 
 require __DIR__ . '/dashboard.php';
