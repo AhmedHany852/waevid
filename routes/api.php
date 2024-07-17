@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Models\OrderServiceGame;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\ReviewController;
+use App\Http\Controllers\AppUser\ReviewController;
 
 use App\Http\Controllers\AppUser\AuthController;
 use App\Http\Controllers\AppUser\OrderController;
@@ -66,6 +66,7 @@ Route::get('/paylink-result2', [OrderServiceGameController::class, 'paylinkResul
 Route::get('/social-media', [GeneralController::class, 'social_media']);
 Route::get('/services', [GeneralController::class, 'services']);
 Route::get('/games', [GeneralController::class, 'games']);
+////
 Route::get('/social-media/{id}', [GeneralController::class, 'showSocial']);
 Route::get('/services/{service}', [GeneralController::class, 'showService']);
 Route::get('/games/{game}', [GeneralController::class, 'showGame']);
