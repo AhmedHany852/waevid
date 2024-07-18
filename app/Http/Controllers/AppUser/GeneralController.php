@@ -6,7 +6,9 @@ use App\Models\Game;
 use App\Models\Service;
 use App\Models\SocialMedia;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\OrderServiceGame;
 
 class GeneralController extends Controller
 {
@@ -63,5 +65,33 @@ class GeneralController extends Controller
             $game->photo = asset('uploads/games_photo/'.$game->photo)  ;
         }
         return response()->json(['successful' => true, 'data' => $game], 200);
+    }
+    public function getSocialMostCommon(){
+        $mostCommonSocialMedia = DB::table('orders')
+        ->select('social_media_id', DB::raw('count(*) as total'))
+        ->groupBy('social_media_id')
+        ->orderBy('total', 'desc')
+        ->get();
+
+        return response()->json(['successful' => true, 'data' => $mostCommonSocialMedia], 200);
+
+    }
+    public function getServiceMostCommon(){
+        $mostCommonService = OrderServiceGame::where('orderable_type', Service::class)
+        ->select('orderable_id', DB::raw('count(*) as total'))
+        ->groupBy('orderable_id')
+        ->orderBy('total', 'desc')
+        ->get();
+        return response()->json(['successful' => true, 'data' => $mostCommonService], 200);
+
+    }
+    public function getGameMostCommon(){
+        $mostCommonGame = OrderServiceGame::where('orderable_type', Game::class)
+        ->select('orderable_id', DB::raw('count(*) as total'))
+        ->groupBy('orderable_id')
+        ->orderBy('total', 'desc')
+        ->get();
+        return response()->json(['successful' => true, 'data' => $mostCommonGame], 200);
+
     }
 }

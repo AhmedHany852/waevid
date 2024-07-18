@@ -9,4 +9,8 @@ class Order extends Model
 {
     use HasFactory;
     protected $guarded =[];
+    public function socialMedias()
+    {
+        return $this->hasMany(SocialMedia::class);
+    }
 }

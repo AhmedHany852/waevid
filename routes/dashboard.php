@@ -1,25 +1,27 @@
 <?php
 
-use App\Http\Controllers\Admin\AboutUsController;
+use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Admin\AuthController;
 
-use App\Http\Controllers\Admin\ContacUsController;
-use App\Http\Controllers\Admin\CouponsController;
-
-
 use App\Http\Controllers\Admin\GameController;
-
-use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\RoleController;
-use App\Http\Controllers\Admin\ServiceController;
 
-use App\Http\Controllers\Admin\SettingController;
-use App\Http\Controllers\Admin\SocialMediaController;
-use App\Http\Controllers\Admin\TermsController;
+
 use App\Http\Controllers\Admin\UserController;
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\TermsController;
+use App\Http\Controllers\Admin\ReviewController;
+use App\Http\Controllers\Admin\AboutUsController;
+
+use App\Http\Controllers\Admin\CouponsController;
+use App\Http\Controllers\Admin\ReportsController;
+use App\Http\Controllers\Admin\ServiceController;
+use App\Http\Controllers\Admin\SettingController;
+
+use App\Http\Controllers\Admin\ContacUsController;
+use App\Http\Controllers\AppUser\GeneralController;
+use App\Http\Controllers\Admin\SocialMediaController;
 
 
 
@@ -112,5 +114,14 @@ Route::group([
     Route::post('/social-media/{id}', [SocialMediaController::class, 'update']);
     Route::delete('/social-media/{id}', [SocialMediaController::class, 'destroy']);
     Route::get('getSocialCount', [SocialMediaController::class, 'SocialCount']);
-   
+    //reports
+    Route::get('/all-order', [ReportsController::class, 'all_orders']);
+    Route::get('/all-orders-service', [ReportsController::class, 'all_orders_service']);
+    Route::get('/all-orders-game', [ReportsController::class, 'all_orders_games']);
+    Route::get('/all-payments', [ReportsController::class, 'all_payments']);
+    //////
+    Route::get('/social-most-common', [GeneralController::class, 'getSocialMostCommon']);
+    Route::get('/service-most-common', [GeneralController::class, 'getServiceMostCommon']);
+    Route::get('/game-most-common', [GeneralController::class, 'getGameMostCommon']);
+
 });

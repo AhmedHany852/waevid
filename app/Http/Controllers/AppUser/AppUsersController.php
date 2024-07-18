@@ -37,7 +37,7 @@ class AppUsersController extends Controller
                 //save code in database
                 $user->otp = $otp;
                 $user->save();
-                if ($user->name != "new_user") {
+                if ($user->firstname != "new_user") {
                     $is_new_user = false;
                 }
 
@@ -47,7 +47,8 @@ class AppUsersController extends Controller
             } else {
                 //create user
                 $user = AppUsers::create([
-                    'name' => 'new_user',
+                    'firstname' => 'new_user',
+                    'lastname' => 'new_user',
                     'phone' => $phone,
                     'otp' => $otp,
                     'api_token' => Str::random(100),
@@ -90,9 +91,9 @@ class AppUsersController extends Controller
         $user = AppUsers::where('phone', $phone)->where('otp',$request->otp)->first();
         if($user)
         {
-            if(isset($request->name) && $request->name != "")
+            if(isset($request->firstname) && $request->firstname != "")
             {
-                $user->name = $request->name;
+                $user->firstname = $request->firstname;
                 $user->save();
             }
             $token = JWTAuth::fromUser($user);
@@ -169,8 +170,8 @@ class AppUsersController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|max:250',
-            'email' => 'required|unique:app_users',
+            'firstname' => 'required|max:250',
+            'lastname' => 'required|max:250',
             'password' => 'required|min:8|max:250',
         ]);
 
@@ -179,7 +180,8 @@ class AppUsersController extends Controller
         }
 
         $user = AppUsers::create([
-            'name' => $request->name,
+            'firstname' => $request->firstname,
+            'lastname' => $request->lastname,
             'password' => Hash::make($request->password),
             'api_token' => Str::random(100),
             'email' => $request->email,

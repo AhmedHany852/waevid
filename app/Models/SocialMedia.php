@@ -14,4 +14,8 @@ class SocialMedia extends Model
     {
         return $this->morphMany('App\Models\Review', 'reviewable');
     }
+    public function order()
+    {
+        return $this->belongsTo(Order::class);
+    }
 }
