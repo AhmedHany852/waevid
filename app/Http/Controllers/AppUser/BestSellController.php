@@ -16,7 +16,11 @@ class BestSellController extends Controller
             ->where('status', 1)
             ->limit(5)
             ->get();
-
+            foreach($bestSellServices as $service){
+                if( $service->photo){
+                    $service->photo = asset('uploads/service_photo/'.$service->photo)  ;
+                }
+            }
         return response()->json([
             'message' => 'Best-selling services',
             'data' => $bestSellServices
@@ -30,7 +34,11 @@ class BestSellController extends Controller
             ->where('status', 1)
             ->limit(5)
             ->get();
-
+            foreach($bestSellGames as $game){
+                if( $game->photo){
+                    $game->photo = asset('uploads/games_photo/'.$game->photo)  ;
+                }
+            }
         return response()->json([
             'message' => 'Best-selling games',
             'data' => $bestSellGames
@@ -42,7 +50,11 @@ class BestSellController extends Controller
             ->where('status', 1)
             ->limit(5)
             ->get();
-
+            foreach($bestSellSocialMedia as $socialMediaItem){
+                if(  $socialMediaItem->photo){
+                    $socialMediaItem->photo = asset('uploads/social_photo/'. $socialMediaItem->photo)  ;
+                  }
+                }
         return response()->json([
             'message' => 'Best-selling social media products',
             'data' => $bestSellSocialMedia
