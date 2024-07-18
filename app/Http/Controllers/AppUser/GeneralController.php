@@ -12,7 +12,7 @@ class GeneralController extends Controller
 {
     public function social_media(Request $request)
     {
-        $socialMediaItems = SocialMedia::paginate($request->get('per_page', 50));
+        $socialMediaItems = SocialMedia::with('review')->paginate($request->get('per_page', 50));
         foreach($socialMediaItems as $socialMediaItem){
             if(  $socialMediaItem->photo){
                 $socialMediaItem->photo = asset('uploads/social_photo/'. $socialMediaItem->photo)  ;
@@ -23,7 +23,7 @@ class GeneralController extends Controller
     }
     public function services(Request $request)
     {
-        $services = Service::paginate($request->get('per_page', 50));
+        $services = Service::with('review')->paginate($request->get('per_page', 50));
         foreach($services as $service){
             if( $service->photo){
                 $service->photo = asset('uploads/service_photo/'.$service->photo)  ;
@@ -33,7 +33,7 @@ class GeneralController extends Controller
     }
     public function games(Request $request)
     {
-        $games = Game::paginate($request->get('per_page', 50));
+        $games = Game::with('review')->paginate($request->get('per_page', 50));
         foreach($games as $game){
             if( $game->photo){
                 $game->photo = asset('uploads/games_photo/'.$game->photo)  ;

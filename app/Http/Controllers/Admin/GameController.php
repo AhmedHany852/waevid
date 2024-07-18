@@ -16,7 +16,7 @@ class GameController extends Controller
      */
     public function index(Request $request)
     {
-        $games = Game::paginate($request->get('per_page', 50));
+        $games = Game::with('review')->paginate($request->get('per_page', 50));
         foreach($games as $game){
             if( $game->photo){
                 $game->photo = asset('uploads/games_photo/'.$game->photo)  ;

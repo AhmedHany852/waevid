@@ -86,9 +86,9 @@ public function login(Request $request)
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string',
+            'firstname' => 'required|string',
+            'lastname' => 'required|string',
             'phone' => 'required|string|unique:app_users,phone',
-            'email' => 'required|string|email|unique:app_users',
             'password' => 'required|string|min:6',
         ]);
 
@@ -99,9 +99,9 @@ public function login(Request $request)
         }
 
         $user = AppUsers::create([
-            'name' => $request->name,
+            'firstname' => $request->firstname,
+            'lastname' => $request->lastname,
             'phone' => "009665" . $request->phone,
-            'email' => $request->email,
             'password' => bcrypt($request->password),
         ]);
 
