@@ -4,11 +4,12 @@ namespace App\Http\Controllers\AppUser;
 
 use App\Models\Game;
 use App\Models\Service;
+use App\Models\AccountType;
 use App\Models\SocialMedia;
 use Illuminate\Http\Request;
+use App\Models\OrderServiceGame;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Models\OrderServiceGame;
 
 class GeneralController extends Controller
 {
@@ -94,4 +95,9 @@ class GeneralController extends Controller
         return response()->json(['successful' => true, 'data' => $mostCommonGame], 200);
 
     }
+    public function getAllAccounts(){
+        $accountTypes =  AccountType::with('user')->get();
+        return response()->json(['successful' => true, 'data' => $accountTypes], 200);
+
+     }
 }

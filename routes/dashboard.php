@@ -123,5 +123,8 @@ Route::group([
     Route::get('/social-most-common', [GeneralController::class, 'getSocialMostCommon']);
     Route::get('/service-most-common', [GeneralController::class, 'getServiceMostCommon']);
     Route::get('/game-most-common', [GeneralController::class, 'getGameMostCommon']);
+    //
+    Route::get('/all-accounts', [GeneralController::class, 'getAllAccounts']);
+
 
 });
