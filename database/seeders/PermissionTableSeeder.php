@@ -44,7 +44,9 @@ class PermissionTableSeeder extends Seeder
             'about-us-list',
             'update-about-us',
             "all-payments",
-            "all-orders",
+            "game-report",
+           "service-report",
+           "social_media-report",
         ];
 
         foreach ($permissions as $permission) {

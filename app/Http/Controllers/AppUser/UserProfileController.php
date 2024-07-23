@@ -13,35 +13,7 @@ use Illuminate\Support\Facades\Validator;
 
 class UserProfileController extends Controller
 {
-    public function myApartments()
-    {
-        $user = Auth::guard('app_users')->user();
-        if (!$user) {
-            return response()->json(['error' => 'User not authenticated'], 401);
-        }
-        $apartments =  Apartment::where('owner_id', $user->id)->get();
-        // dd($apartments);
-        if ($apartments->count() > 0) {
-            return response()->json(['data' => ApartmentResource::collection($apartments)], 200);
-        }
-        return response()->json(['error' => 'User not has investment apartments'], 422);
-    }
 
-    public function SolidApartments()
-    {
-        $user = Auth::guard('app_users')->user();
-        if (!$user) {
-            return response()->json(['error' => 'User not authenticated'], 401);
-        }
-        $apartments = Apartment::whereHas('BookedApartments', function ($query) {
-            $query->where('paid', 1);
-        })->where('owner_id', $user->id)->get();
-
-        if ($apartments->count() > 0) {
-            return response()->json(['data' => ApartmentResource::collection($apartments)], 200);
-        }
-        return response()->json(['error' => ' not exist  apartments solid'], 422);
-    }
 
     /**
      * Display a listing of the resource.
@@ -64,8 +36,8 @@ class UserProfileController extends Controller
             return response()->json(['error' => 'User not authenticated'], 401);
         }
 
-        $user->name = $request->input('name');
-        $user->email = $request->input('email');
+        $user->firstname = $request->input('firstname');
+        $user->lastname = $request->input('lastname');
         $user->phone = "009665" . $request->phone;
         if (request()->has('image') &&  request('image') != '') {
             $avatar = request()->file('image');
