@@ -78,7 +78,7 @@ class AppUsersController extends Controller
         $phone = "009665". $request->phone;
         if($request->phone == "93783093")
         {
-            dd(77);
+
 
             $user = AppUsers::where('phone', $phone)->first();
             $token = JWTAuth::fromUser($user);
@@ -91,7 +91,7 @@ class AppUsersController extends Controller
         }
 
         $user = AppUsers::where('phone', $phone)->where('otp',$request->otp)->first();
-       dd($user);
+
         if($user)
         {
             if(isset($request->firstname) && $request->firstname != "")
