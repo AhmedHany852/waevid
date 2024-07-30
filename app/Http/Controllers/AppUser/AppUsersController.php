@@ -89,6 +89,7 @@ class AppUsersController extends Controller
         }
 
         $user = AppUsers::where('phone', $phone)->where('otp',$request->otp)->first();
+       dd($user);
         if($user)
         {
             if(isset($request->firstname) && $request->firstname != "")
